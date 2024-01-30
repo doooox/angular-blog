@@ -1,0 +1,19 @@
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+}
+.nav-link {
+  text-decoration: none;
+  color: #fff;
+}
+.nav-link:hover {
+  color: #d3d0d0;
+  cursor: pointer;
+}
+ul {
+  list-style: none;
+  display: flex;
+}
+li {
+  margin: 0 0.5rem;
+}

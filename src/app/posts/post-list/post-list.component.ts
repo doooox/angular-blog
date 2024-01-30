@@ -3,6 +3,7 @@ import { Post } from '../post.models';
 import { Subscription } from 'rxjs';
 import { PostService } from '../post.service';
 import { PageEvent } from '@angular/material/paginator';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-post-list',
@@ -11,22 +12,39 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
+  private postSub!: Subscription;
+
   postsPerPage: number = 0;
   totalPosts: number = 0;
   currentPage: number = 1;
   pageSizeOptions = [5, 10, 15, 20];
-  private postSub!: Subscription;
+
   breakpoint: number = 0;
 
-  constructor(private postService: PostService) {}
+  private authStatusSubs!: Subscription;
+  userIsAuthenticated = false;
+  userId: string | null = null;
+
+  constructor(
+    private postService: PostService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.updateBreakpoint(window.innerWidth);
     this.postService.getAllPosts(this.postsPerPage, this.currentPage);
+    this.userId = this.authService.getUserId();
     this.postSub = this.postService.getPostsUpdated().subscribe((response) => {
       this.totalPosts = response.totalCount;
       this.posts = response.posts;
     });
+    this.userIsAuthenticated = this.authService.getAuthStatus();
+    this.authStatusSubs = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuthenticated) => {
+        this.userIsAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserId();
+      });
   }
 
   onChangedPage(pageData: PageEvent) {
@@ -51,7 +69,14 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.updateBreakpoint(event.target.innerWidth);
   }
 
+  onPostDelete(id: string) {
+    this.postService.onDeletePost(id).subscribe((response) => {
+      this.postService.getAllPosts(this.postsPerPage, this.currentPage);
+    });
+  }
+
   ngOnDestroy(): void {
     this.postSub.unsubscribe();
+    this.authStatusSubs.unsubscribe();
   }
 }

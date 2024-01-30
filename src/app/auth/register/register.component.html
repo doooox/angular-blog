@@ -16,7 +16,11 @@
         email
       />
     </mat-form-field>
-    <mat-error *ngIf="emailInput.invalid">Enter Valid Email</mat-error>
+    <mat-error
+      *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
+    >
+      Enter Valid Email
+    </mat-error>
     <mat-form-field>
       <mat-label>Enter Your Username</mat-label>
       <input
@@ -28,7 +32,13 @@
         required
       />
     </mat-form-field>
-    <mat-error *ngIf="usernameInput.invalid">Enter Valid Username</mat-error>
+    <mat-error
+      *ngIf="
+        usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)
+      "
+    >
+      Enter Valid Username
+    </mat-error>
     <mat-form-field>
       <mat-label>Enter Your Content</mat-label>
       <input
@@ -39,7 +49,14 @@
         ngModel
         required
       />
-      <mat-error *ngIf="passwordInput.invalid">Enter Valid Password</mat-error>
+      <mat-error
+        *ngIf="
+          passwordInput.invalid &&
+          (passwordInput.dirty || passwordInput.touched)
+        "
+      >
+        Enter Valid Password
+      </mat-error>
     </mat-form-field>
     <button mat-raised-button color="accent" type="submit">Register</button>
   </form>

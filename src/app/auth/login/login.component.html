@@ -16,7 +16,11 @@
         email
       />
     </mat-form-field>
-    <mat-error *ngIf="emailInput.invalid">Enter Valid Email</mat-error>
+    <mat-error
+      *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
+    >
+      Enter Valid Email
+    </mat-error>
     <mat-form-field>
       <mat-label>Enter Your Content</mat-label>
       <input
@@ -27,7 +31,14 @@
         ngModel
         required
       />
-      <mat-error *ngIf="passwordInput.invalid">Enter Valid Password</mat-error>
+      <mat-error
+        *ngIf="
+          passwordInput.invalid &&
+          (passwordInput.dirty || passwordInput.touched)
+        "
+      >
+        Enter Valid Password
+      </mat-error>
     </mat-form-field>
     <button mat-raised-button color="accent" type="submit">Login</button>
   </form>

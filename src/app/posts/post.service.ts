@@ -43,4 +43,8 @@ export class PostService {
       this.router.navigate(['']);
     });
   }
+
+  onDeletePost(id: string) {
+    return this.http.delete(`${baseURL}posts/delete/${id}`);
+  }
 }
