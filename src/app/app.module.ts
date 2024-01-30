@@ -6,10 +6,13 @@ import { AppComponent } from './app.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { SinglePostComponent } from './posts/single-post/single-post.component';
 import { CreatePostComponent } from './posts/create-post/create-post.component';
-import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './utils/AngularMaterial.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -17,16 +20,21 @@ import { AngularMaterialModule } from './utils/AngularMaterial.module';
     PostListComponent,
     SinglePostComponent,
     CreatePostComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule,
     HttpClientModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,9 +1,9 @@
 export interface Post {
   _id: string;
+  author: string;
   title: string;
   content: string;
   imagePath: string;
-  author: string;
   comments: string[];
 }
 
@@ -22,4 +22,9 @@ export interface Comment {
 export interface PostResponse {
   posts: Post[];
   totalCount: number;
+}
+export interface PostRequest {
+  title: string;
+  content: string;
+  image: File;
 }

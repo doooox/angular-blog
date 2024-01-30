@@ -21,11 +21,11 @@ export class PostListComponent implements OnInit, OnDestroy {
   constructor(private postService: PostService) {}
 
   ngOnInit(): void {
+    this.updateBreakpoint(window.innerWidth);
     this.postService.getAllPosts(this.postsPerPage, this.currentPage);
     this.postSub = this.postService.getPostsUpdated().subscribe((response) => {
       this.totalPosts = response.totalCount;
       this.posts = response.posts;
-      console.log(this.posts);
     });
   }
 

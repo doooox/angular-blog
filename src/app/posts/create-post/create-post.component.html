@@ -1,1 +1,48 @@
-<p>create-post works!</p>
+<mat-card style="width: 50%; margin: auto">
+  <form
+    style="display: flex; flex-direction: column"
+    (submit)="onSavePost()"
+    [formGroup]="form"
+  >
+    <mat-form-field>
+      <mat-label>Enter Your Email</mat-label>
+      <input formControlName="title" matInput />
+    </mat-form-field>
+    <mat-error *ngIf="form?.get('title')?.invalid && form.get('title')?.touched"
+      >Enter Post Title</mat-error
+    >
+    <div>
+      <button mat-stroked-button type="button" (click)="filePicker.click()">
+        Pick Image
+      </button>
+      <input
+        type="file"
+        class="file-input"
+        #filePicker
+        (change)="onImagePicked($event)"
+      />
+    </div>
+    <mat-error *ngIf="form.get('image')?.hasError('mimeType')">
+      Invalid file type. Only PNG, GIF, and JPEG are allowed.
+    </mat-error>
+    <div
+      class="image-preview"
+      *ngIf="
+        imagePreview !== '' &&
+        imagePreview &&
+        !form.get('image')?.hasError('mimeType')
+      "
+    >
+      <img [src]="imagePreview" [alt]="form.value.title" />
+    </div>
+    <mat-form-field>
+      <mat-label>Enter Your Content</mat-label>
+      <textarea matInput rows="4" formControlName="content"></textarea>
+      <mat-error
+        *ngIf="form?.get('content')?.invalid && form.get('content')?.touched"
+        >Enter Post Content</mat-error
+      >
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Save Post!</button>
+  </form>
+</mat-card>
