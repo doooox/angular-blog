@@ -1,1 +1,22 @@
-<p>single-post works!</p>
+<div class="container">
+  <div class="post-header">
+    <h1>{{ post?.title }}</h1>
+    <p class="author">Author: {{ post?.author?.username }}</p>
+  </div>
+
+  <div class="post-image-container">
+    <img [src]="post?.imagePath" alt="Post Cover" class="post-image" />
+  </div>
+
+  <div class="post-content">
+    <p>{{ post?.content }}</p>
+  </div>
+  <div>
+    <h4>Comments:</h4>
+    <div *ngFor="let comment of post?.comments" class="container">
+      <h4>{{ comment.title }}</h4>
+      <p class="post-content">{{ comment.text }}</p>
+      <small>By {{ comment.user.username }}</small>
+    </div>
+  </div>
+</div>

@@ -1,22 +1,26 @@
 export interface Post {
   _id: string;
-  author: string;
+  author: author | null;
   title: string;
   content: string;
   imagePath: string;
-  comments: string[];
+  comments: Comment[];
 }
 
 export interface Comment {
   _id: string;
   title: string;
-  test: string;
+  text: string;
   user: {
     _id: string;
     email: string;
     username: string;
   };
-  post: string;
+  post: {
+    _id: string;
+    username: string;
+    email: string;
+  };
 }
 
 export interface PostResponse {
@@ -31,8 +35,13 @@ export interface PostRequest {
 
 export interface UpdateRequest {
   _id: string;
-  author: string | null;
+  author: author | null;
   title: string;
   content: string;
   imagePath: File | string;
+}
+export interface author {
+  _id: string;
+  username: string;
+  email: string;
 }
