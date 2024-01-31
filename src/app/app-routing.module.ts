@@ -15,6 +15,11 @@ const routes: Routes = [
     component: CreatePostComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: NAVIGATIONROUTES.UPDATEPOST,
+    component: CreatePostComponent,
+    canActivate: [AuthGuard],
+  },
   { path: NAVIGATIONROUTES.REGISTER, component: RegisterComponent },
   { path: NAVIGATIONROUTES.LOGIN, component: LoginComponent },
   { path: NAVIGATIONROUTES.SINGLEPOST, component: SinglePostComponent },

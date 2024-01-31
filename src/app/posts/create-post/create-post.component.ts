@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PostService } from '../post.service';
 import { mimeTypeValidator } from '../../utils/mime-type.validator';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { UpdateRequest } from '../post.models';
 
 @Component({
   selector: 'app-create-post',
@@ -9,25 +11,59 @@ import { mimeTypeValidator } from '../../utils/mime-type.validator';
   styleUrl: './create-post.component.css',
 })
 export class CreatePostComponent implements OnInit {
+  private mode: string = 'create';
+  private id: string | null = '';
+
   form!: FormGroup;
   imagePreview!: string;
+  postForUpdate: UpdateRequest | undefined;
 
-  constructor(private postService: PostService) {}
+  constructor(
+    private postService: PostService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
       title: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3)],
-        updateOn: 'blur',
       }),
       content: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3)],
-        updateOn: 'blur',
       }),
       image: new FormControl(null, {
         validators: [Validators.required],
         asyncValidators: [mimeTypeValidator],
       }),
+    });
+
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('id')) {
+        this.mode = 'edit';
+        this.id = paramMap.get('id');
+        if (this.id !== null) {
+          this.postService.getSinglePost(this.id).subscribe((postData) => {
+            if (this.id !== null) {
+              this.postForUpdate = {
+                _id: this.id,
+                title: postData.title,
+                content: postData.content,
+                imagePath: postData.imagePath,
+                author: postData.author,
+              };
+              this.form?.setValue({
+                title: this.postForUpdate.title,
+                content: this.postForUpdate.content,
+                image: this.postForUpdate.imagePath,
+              });
+            }
+          });
+        }
+      } else {
+        this.mode = 'create';
+        this.id = null;
+        this.postForUpdate = undefined;
+      }
     });
   }
 
@@ -46,11 +82,19 @@ export class CreatePostComponent implements OnInit {
 
   onSavePost() {
     if (this.form.invalid) return;
-    const postData = {};
-    this.postService.onAddPost(
-      this.form.value.title,
-      this.form.value.content,
-      this.form.value.image
-    );
+    if (this.mode === 'create') {
+      this.postService.onAddPost(
+        this.form.value.title,
+        this.form.value.content,
+        this.form.value.image
+      );
+    } else if (this.mode === 'edit' && this.id !== null) {
+      this.postService.onUpdatePost(
+        this.id,
+        this.form.value.title,
+        this.form.value.content,
+        this.form.value.image
+      );
+    }
   }
 }

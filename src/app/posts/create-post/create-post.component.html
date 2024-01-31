@@ -22,7 +22,7 @@
         (change)="onImagePicked($event)"
       />
     </div>
-    <mat-error *ngIf="form.get('image')?.hasError('mimeType')">
+    <mat-error *ngIf="form.get('imagePath')?.hasError('mimeType')">
       Invalid file type. Only PNG, GIF, and JPEG are allowed.
     </mat-error>
     <div

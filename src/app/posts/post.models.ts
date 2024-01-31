@@ -26,5 +26,13 @@ export interface PostResponse {
 export interface PostRequest {
   title: string;
   content: string;
-  image: File;
+  imagePath: File | string;
+}
+
+export interface UpdateRequest {
+  _id: string;
+  author: string | null;
+  title: string;
+  content: string;
+  imagePath: File | string;
 }
