@@ -70,14 +70,11 @@ export class PostService {
       };
     }
 
-    this.http.put(`${baseURL}posts/update/${id}`, postData).subscribe(
-      (response) => {
+    this.http
+      .put(`${baseURL}posts/update/${id}`, postData)
+      .subscribe((response) => {
         this.router.navigate(['']);
-      },
-      (error) => {
-        console.error('Error updating post:', error);
-      }
-    );
+      });
   }
 
   onDeletePost(id: string) {

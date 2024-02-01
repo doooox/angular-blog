@@ -7,6 +7,11 @@ export interface Post {
   comments: Comment[];
 }
 
+export interface CommentRequest {
+  title: string;
+  text: string;
+}
+
 export interface Comment {
   _id: string;
   title: string;
