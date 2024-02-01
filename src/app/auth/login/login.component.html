@@ -1,6 +1,8 @@
-<mat-card style="width: 50%; margin: auto">
+<main></main>
+<mat-card class="container">
+  <h3>Login</h3>
   <form
-    style="display: flex; flex-direction: column"
+    class="form-container"
     (submit)="onLogin(loginForm)"
     #loginForm="ngForm"
   >
@@ -40,6 +42,11 @@
         Enter Valid Password
       </mat-error>
     </mat-form-field>
-    <button mat-raised-button color="accent" type="submit">Login</button>
+    <div *ngIf="errorMessage" class="error-message">
+      Login Failed: {{ errorMessage }}
+    </div>
+    <button mat-raised-button color="primary" type="submit" class="form-btn">
+      Login
+    </button>
   </form>
 </mat-card>

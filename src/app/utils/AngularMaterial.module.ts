@@ -7,6 +7,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   exports: [
@@ -18,6 +19,7 @@ import { MatListModule } from '@angular/material/list';
     MatInputModule,
     MatToolbarModule,
     MatListModule,
+    MatProgressBarModule,
   ],
 })
 export class AngularMaterialModule {}

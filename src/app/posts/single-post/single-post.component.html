@@ -19,7 +19,7 @@
       <small>By {{ comment.user.username }}</small>
     </div>
   </div>
-  <div class="comment-form-container">
+  <div class="comment-form-container" *ngIf="userIsAuthenticated">
     <app-add-comment></app-add-comment>
   </div>
 </div>

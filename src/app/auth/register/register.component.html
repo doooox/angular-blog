@@ -1,6 +1,8 @@
-<mat-card style="width: 50%; margin: auto">
+<mat-card class="container">
+  <h3>Register</h3>
+
   <form
-    style="display: flex; flex-direction: column"
+    class="form-container"
     (submit)="onRegister(registerForm)"
     #registerForm="ngForm"
   >
@@ -21,6 +23,7 @@
     >
       Enter Valid Email
     </mat-error>
+
     <mat-form-field>
       <mat-label>Enter Your Username</mat-label>
       <input
@@ -58,6 +61,9 @@
         Enter Valid Password
       </mat-error>
     </mat-form-field>
-    <button mat-raised-button color="accent" type="submit">Register</button>
+    <div *ngIf="errorMessage" class="error-message">
+      Registration Failed: {{ errorMessage }}
+    </div>
+    <button mat-raised-button color="primary" type="submit">Register</button>
   </form>
 </mat-card>

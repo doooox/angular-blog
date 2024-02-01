@@ -6,5 +6,5 @@ export const NAVIGATIONROUTES = {
   UPDATEPOST: 'edit/:id',
   LOGIN: 'login',
   REGISTER: 'register',
-  SINGLEPOST: ':id',
+  SINGLEPOST: 'post/:id',
 };

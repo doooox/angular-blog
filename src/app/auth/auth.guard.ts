@@ -10,16 +10,28 @@ import { AuthService } from './auth.service';
 @Injectable()
 export class AuthGuard {
   constructor(private authService: AuthService, private router: Router) {}
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean | Observable<boolean> | Promise<boolean> {
     const isAuth = this.authService.getAuthStatus();
+    const protectedRoute = route.data['requireAuth'] === true;
 
-    if (!isAuth) {
+    if (!isAuth && protectedRoute) {
       this.router.navigate(['/login']);
       return false;
     }
-    return isAuth;
+
+    if (!isAuth && !protectedRoute) {
+      return true;
+    }
+
+    if (isAuth && !protectedRoute) {
+      this.router.navigate(['/']);
+      return false;
+    }
+
+    return true;
   }
 }

@@ -1,10 +1,14 @@
 .nav-container {
   display: flex;
   justify-content: space-between;
+  padding: 3rem 2rem;
 }
 .nav-link {
   text-decoration: none;
   color: #fff;
+}
+.main {
+  font-size: 2rem;
 }
 .nav-link:hover {
   color: #d3d0d0;

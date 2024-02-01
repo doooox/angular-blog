@@ -1,0 +1,28 @@
+.container {
+  width: 50%;
+  margin: auto;
+  padding: 3rem;
+}
+h3 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+.form-btn {
+  max-width: 50%;
+  margin: auto;
+}
+.error-message {
+  color: red;
+  text-align: center;
+  margin: 1rem 0;
+}
+@media screen and (max-width: 768px) {
+  .container {
+    width: 90%;
+    padding: 2rem;
+  }
+}

@@ -14,10 +14,10 @@ export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
   private postSub!: Subscription;
 
-  postsPerPage: number = 5;
+  postsPerPage: number = 4;
   totalPosts: number = 0;
   currentPage: number = 1;
-  pageSizeOptions = [5, 10, 15, 20];
+  pageSizeOptions = [4, 8, 12, 16, 24];
 
   breakpoint: number = 0;
 
