@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommentService } from '../comment.service';
 import { NgForm } from '@angular/forms';
 import { Comment, CommentRequest } from '../post.models';
-import { Subscription, from } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -28,6 +27,7 @@ export class AddCommentComponent implements OnInit {
     };
 
     this.commentService.addComment(this.postId, commentData);
+    form.resetForm();
   }
   ngOnInit(): void {
     this.route.paramMap.subscribe((paramMap) => {

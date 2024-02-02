@@ -5,11 +5,11 @@
     [formGroup]="form"
   >
     <mat-form-field>
-      <mat-label>Enter Your Email</mat-label>
+      <mat-label>Enter Post Title</mat-label>
       <input formControlName="title" matInput />
     </mat-form-field>
     <mat-error *ngIf="form?.get('title')?.invalid && form.get('title')?.touched"
-      >Enter Post Title</mat-error
+      >Post Title Is Required</mat-error
     >
     <div>
       <button mat-stroked-button type="button" (click)="filePicker.click()">
@@ -36,11 +36,11 @@
       <img [src]="imagePreview" [alt]="form.value.title" />
     </div>
     <mat-form-field>
-      <mat-label>Enter Your Content</mat-label>
+      <mat-label>Enter Post Content</mat-label>
       <textarea matInput rows="4" formControlName="content"></textarea>
       <mat-error
         *ngIf="form?.get('content')?.invalid && form.get('content')?.touched"
-        >Enter Post Content</mat-error
+        >Post Content Is Required</mat-error
       >
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit">Save Post!</button>
