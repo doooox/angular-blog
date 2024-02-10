@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PostService } from '../post.service';
 import { mimeTypeValidator } from '../../utils/mime-type.validator';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { UpdateRequest } from '../post.models';
+import { Category, UpdateRequest } from '../post.models';
 
 @Component({
   selector: 'app-create-post',
@@ -13,6 +13,7 @@ import { UpdateRequest } from '../post.models';
 export class CreatePostComponent implements OnInit {
   private mode: string = 'create';
   private id: string | null = '';
+  categories: Category[] = [];
 
   form!: FormGroup;
   imagePreview!: string;
@@ -35,6 +36,13 @@ export class CreatePostComponent implements OnInit {
         validators: [Validators.required],
         asyncValidators: [mimeTypeValidator],
       }),
+      categories: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+    });
+
+    this.postService.getPostCategories().subscribe((categories: Category[]) => {
+      this.categories = categories;
     });
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -82,19 +90,15 @@ export class CreatePostComponent implements OnInit {
 
   onSavePost() {
     if (this.form.invalid) return;
+    const title = this.form.value.title;
+    const content = this.form.value.content;
+    const image = this.form.value.image;
+    const categories = this.form.value.categories;
+
     if (this.mode === 'create') {
-      this.postService.onAddPost(
-        this.form.value.title,
-        this.form.value.content,
-        this.form.value.image
-      );
+      this.postService.onAddPost(title, content, image, categories);
     } else if (this.mode === 'edit' && this.id !== null) {
-      this.postService.onUpdatePost(
-        this.id,
-        this.form.value.title,
-        this.form.value.content,
-        this.form.value.image
-      );
+      this.postService.onUpdatePost(this.id, title, content, image);
     }
   }
 }

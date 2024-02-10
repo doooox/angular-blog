@@ -2,6 +2,17 @@
   <div class="post-header">
     <h1>{{ post?.title }}</h1>
     <p class="author">Author: {{ post?.author?.username }}</p>
+
+    <div class="categories-list">
+      <p>Categories:</p>
+      <ul *ngFor="let category of post?.categories">
+        <li>
+          <button mat-flat-button type="submit">
+            {{ category.name }}
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
 
   <div class="post-image-container">
@@ -16,7 +27,7 @@
     <div *ngFor="let comment of post?.comments" class="container">
       <h4>{{ comment.title }}</h4>
       <p class="post-content">{{ comment.text }}</p>
-      <small>By {{ comment.user.username }}</small>
+      <small>By: {{ comment.user.username }}</small>
     </div>
   </div>
   <div class="comment-form-container" *ngIf="userIsAuthenticated">

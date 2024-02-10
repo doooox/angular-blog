@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Post, PostRequest, PostResponse, UpdateRequest } from './post.models';
+import {
+  Category,
+  Post,
+  PostRequest,
+  PostResponse,
+  UpdateRequest,
+} from './post.models';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { baseURL } from '../utils/static';
@@ -29,6 +35,10 @@ export class PostService {
     return this.updatedPosts.asObservable();
   }
 
+  getPostCategories() {
+    return this.http.get<Category[]>(`${baseURL}categories/`);
+  }
+
   getSinglePost(id: string) {
     return this.http.get<Post>(`${baseURL}posts/${id}`);
   }
@@ -37,11 +47,12 @@ export class PostService {
     return this.http.get<UpdateRequest>(`${baseURL}posts/${id}`);
   }
 
-  onAddPost(title: string, content: string, image: File) {
+  onAddPost(title: string, content: string, image: File, categories: string[]) {
     const postData = new FormData();
     postData.append('title', title);
     postData.append('content', content);
     postData.append('image', image, title);
+    postData.append('categories', JSON.stringify(categories));
     this.http.post(`${baseURL}posts/add`, postData).subscribe((response) => {
       this.router.navigate(['']);
     });

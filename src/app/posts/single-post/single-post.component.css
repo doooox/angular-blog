@@ -39,3 +39,21 @@
 .comment-form-container {
   margin: 2rem 0;
 }
+.categories-list {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.categories-list ul {
+  list-style: none;
+}
+
+@media screen and (max-width: 768px) {
+  .categories-list {
+    flex-wrap: wrap;
+    display: block;
+    text-align: left;
+  }
+}

@@ -1,0 +1,10 @@
+.add-comment-container {
+  width: 50%;
+  margin: auto;
+  padding: 1rem;
+}
+@media screen and (max-width: 768px) {
+  .add-comment-container {
+    width: 90%;
+  }
+}

@@ -5,6 +5,7 @@ export interface Post {
   content: string;
   imagePath: string;
   comments: Comment[];
+  categories: Category[];
 }
 
 export interface CommentRequest {
@@ -36,6 +37,7 @@ export interface PostRequest {
   title: string;
   content: string;
   imagePath: File | string;
+  categories?: string[];
 }
 
 export interface UpdateRequest {
@@ -49,4 +51,9 @@ export interface author {
   _id: string;
   username: string;
   email: string;
+}
+
+export interface Category {
+  _id: string;
+  name: string;
 }
