@@ -58,11 +58,13 @@ export class CreatePostComponent implements OnInit {
                 content: postData.content,
                 imagePath: postData.imagePath,
                 author: postData.author,
+                categories: postData.categories.map((category) => category._id),
               };
               this.form?.setValue({
                 title: this.postForUpdate.title,
                 content: this.postForUpdate.content,
                 image: this.postForUpdate.imagePath,
+                categories: this.postForUpdate.categories,
               });
             }
           });
@@ -98,7 +100,7 @@ export class CreatePostComponent implements OnInit {
     if (this.mode === 'create') {
       this.postService.onAddPost(title, content, image, categories);
     } else if (this.mode === 'edit' && this.id !== null) {
-      this.postService.onUpdatePost(this.id, title, content, image);
+      this.postService.onUpdatePost(this.id, title, content, image, categories);
     }
   }
 }

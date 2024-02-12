@@ -6,7 +6,7 @@ import {
   PostResponse,
   UpdateRequest,
 } from './post.models';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { baseURL } from '../utils/static';
 import { Router } from '@angular/router';
@@ -72,7 +72,8 @@ export class PostService {
     id: string,
     title: string,
     content: string,
-    image: File | string
+    image: File | string,
+    categories: string[]
   ) {
     let postData: UpdateRequest | FormData;
 
@@ -80,12 +81,14 @@ export class PostService {
       postData = new FormData();
       postData.append('title', title);
       postData.append('content', content);
+      postData.append('categories', JSON.stringify(categories));
       postData.append('image', image, title);
     } else {
       postData = {
         _id: id,
         title,
         content,
+        categories,
         imagePath: image,
         author: null,
       };

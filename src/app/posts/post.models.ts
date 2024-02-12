@@ -46,6 +46,7 @@ export interface UpdateRequest {
   title: string;
   content: string;
   imagePath: File | string;
+  categories: string[];
 }
 export interface author {
   _id: string;
