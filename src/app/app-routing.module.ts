@@ -35,7 +35,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { requireAuth: false },
   },
+  { path: NAVIGATIONROUTES.POSTLISTBYCATEGORY, component: PostListComponent },
   { path: NAVIGATIONROUTES.SINGLEPOST, component: SinglePostComponent },
+
   { path: '**', component: NoPageFoundComponent },
 ];
 

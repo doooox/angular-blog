@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { PostService } from '../post.service';
 import { PageEvent } from '@angular/material/paginator';
 import { AuthService } from '../../auth/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-post-list',
@@ -27,12 +28,12 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   constructor(
     private postService: PostService,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.updateBreakpoint(window.innerWidth);
-    this.postService.getAllPosts(this.postsPerPage, this.currentPage);
     this.userId = this.authService.getUserId();
     this.postSub = this.postService.getPostsUpdated().subscribe((response) => {
       this.totalPosts = response.totalCount;
@@ -45,12 +46,37 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
       });
+    this.route.paramMap.subscribe((params) => {
+      const categoryId = params.get('categoryId');
+      if (categoryId) {
+        this.postService
+          .getPostsByCategory(categoryId, this.postsPerPage, this.currentPage)
+          .subscribe((response) => {
+            this.posts = response.posts;
+            this.totalPosts = response.totalCount;
+          });
+      } else {
+        this.postService.getAllPosts(this.postsPerPage, this.currentPage);
+      }
+    });
   }
 
   onChangedPage(pageData: PageEvent) {
     this.currentPage = pageData.pageIndex + 1;
     this.postsPerPage = pageData.pageSize;
-    this.postService.getAllPosts(this.postsPerPage, this.currentPage);
+
+    const categoryId = this.route.snapshot.paramMap.get('categoryId');
+
+    if (categoryId) {
+      this.postService
+        .getPostsByCategory(categoryId, this.postsPerPage, this.currentPage)
+        .subscribe((response) => {
+          this.posts = response.posts;
+          this.totalPosts = response.totalCount;
+        });
+    } else {
+      this.postService.getAllPosts(this.postsPerPage, this.currentPage);
+    }
   }
 
   updateBreakpoint(width: number) {

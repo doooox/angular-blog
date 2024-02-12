@@ -6,7 +6,7 @@ import {
   PostResponse,
   UpdateRequest,
 } from './post.models';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { baseURL } from '../utils/static';
 import { Router } from '@angular/router';
@@ -29,6 +29,16 @@ export class PostService {
           totalCount: response.totalCount,
         });
       });
+  }
+  getPostsByCategory<PostResponse>(
+    categoryId: string,
+    postPerPage: number,
+    currentPage: number
+  ) {
+    const queryParams = `?pageSize=${postPerPage}&page=${currentPage}`;
+    return this.http.get<any>(
+      `${baseURL}posts/filter/${categoryId}${queryParams}`
+    );
   }
 
   getPostsUpdated() {

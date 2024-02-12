@@ -7,7 +7,7 @@
       <p>Categories:</p>
       <ul *ngFor="let category of post?.categories">
         <li>
-          <button mat-flat-button type="submit">
+          <button mat-flat-button [routerLink]="['', 'category', category._id]">
             {{ category.name }}
           </button>
         </li>
