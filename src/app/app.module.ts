@@ -11,9 +11,16 @@ import { HeaderComponent } from './header/header.component';
 import { PostModule } from './posts/post.module';
 import { AuthModule } from './auth/auth.module';
 import { NoPageFoundComponent } from './no-page-found/no-page-found.component';
+import { SearchComponent } from './search/search.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, NoPageFoundComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    NoPageFoundComponent,
+    SearchComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -22,6 +29,7 @@ import { NoPageFoundComponent } from './no-page-found/no-page-found.component';
     AngularMaterialModule,
     PostModule,
     AuthModule,
+    FormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

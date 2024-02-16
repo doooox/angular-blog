@@ -16,6 +16,9 @@
 }
 
 .card-content {
-  height: 20%;
+  height: 30%;
   overflow: hidden;
+}
+small:nth-child(2) {
+  margin: 0 2rem;
 }

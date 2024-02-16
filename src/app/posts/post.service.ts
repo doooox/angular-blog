@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Category,
-  Post,
-  PostRequest,
-  PostResponse,
-  UpdateRequest,
-} from './post.models';
+import { Category, Post, PostResponse, UpdateRequest } from './post.models';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { baseURL } from '../utils/static';
@@ -30,7 +24,7 @@ export class PostService {
         });
       });
   }
-  getPostsByCategory<PostResponse>(
+  getPostsByCategory(
     categoryId: string,
     postPerPage: number,
     currentPage: number
@@ -55,6 +49,14 @@ export class PostService {
 
   getPostForUpdate(id: string) {
     return this.http.get<UpdateRequest>(`${baseURL}posts/${id}`);
+  }
+
+  getSearchedPosts(query: string) {
+    const queryParams = `?query=${query}`;
+
+    return this.http.get<[{ _id: string; title: string }]>(
+      `${baseURL}posts/search${queryParams}`
+    );
   }
 
   onAddPost(title: string, content: string, image: File, categories: string[]) {

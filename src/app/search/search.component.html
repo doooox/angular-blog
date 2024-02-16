@@ -1,0 +1,14 @@
+<div class="search-container">
+  <input
+    class="search-input"
+    type="text"
+    [(ngModel)]="query"
+    (input)="onInputChange()"
+    placeholder="Search for posts..."
+  />
+  <ul class="search-results">
+    <li *ngFor="let post of searchResults" (click)="onSelectInput(post)">
+      {{ post.title }}
+    </li>
+  </ul>
+</div>

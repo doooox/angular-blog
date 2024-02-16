@@ -1,5 +1,6 @@
 <mat-toolbar color="primary" class="nav-container">
   <span routerLink="" class="nav-link main">Blog App</span>
+  <app-search></app-search>
   <ul>
     <li *ngIf="userIsAuthenticated">
       <a routerLink="/create" class="nav-link">New Post</a>

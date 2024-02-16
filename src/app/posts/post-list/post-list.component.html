@@ -4,6 +4,10 @@
       <img mat-card-image [src]="post.imagePath" class="card-image" />
       <mat-card-content class="card-content">
         <h4>{{ post.title }}</h4>
+        <div>
+          <small>Comments: {{ post.comments.length }}</small>
+          <small>Views: {{ post.views }}</small>
+        </div>
       </mat-card-content>
       <mat-card-actions>
         <button mat-button [routerLink]="['/post/', post._id]">View</button>
