@@ -7,6 +7,11 @@ export interface Post {
   views: number;
   comments: Comment[];
   categories: Category[];
+  likes: Like[];
+}
+
+interface Like {
+  _id: string;
 }
 
 export interface CommentRequest {

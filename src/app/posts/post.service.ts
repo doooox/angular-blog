@@ -59,6 +59,10 @@ export class PostService {
     );
   }
 
+  likePost(postId: string) {
+    return this.http.put(`${baseURL}posts/like/${postId}`, {});
+  }
+
   onAddPost(title: string, content: string, image: File, categories: string[]) {
     const postData = new FormData();
     postData.append('title', title);

@@ -15,7 +15,7 @@
   position: absolute;
   top: 85%;
   left: 0;
-  width: 100%;
+  width: 20rem;
   z-index: 1;
   list-style: none;
   padding: 0;
@@ -30,8 +30,25 @@
 .search-results li {
   padding: 10px;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .search-results li:hover {
   background-color: #f0f0f0;
+}
+@media screen and (max-width: 768px) {
+  .search-input {
+    width: 100%;
+    padding: 0.4rem;
+    font-size: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 1rem;
+  }
+  .search-results {
+    width: 10rem;
+    font-size: 0.8rem;
+  }
 }

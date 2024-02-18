@@ -60,6 +60,14 @@ export class PostListComponent implements OnInit, OnDestroy {
       }
     });
   }
+  onLikePost(postId: string) {
+    this.postService.likePost(postId).subscribe((response) => {
+      const postIndex = this.posts.findIndex((post) => post._id === postId);
+      this.postService.getSinglePost(postId).subscribe((updatedPost) => {
+        this.posts[postIndex].likes = updatedPost.likes;
+      });
+    });
+  }
 
   onChangedPage(pageData: PageEvent) {
     this.currentPage = pageData.pageIndex + 1;
