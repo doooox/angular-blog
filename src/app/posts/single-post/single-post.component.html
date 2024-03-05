@@ -24,7 +24,7 @@
   </div>
   <div>
     <h4>Comments:</h4>
-    <div *ngFor="let comment of post?.comments" class="container">
+    <div *ngFor="let comment of comments" class="container">
       <h4>{{ comment.title }}</h4>
       <p class="post-content">{{ comment.text }}</p>
       <small>By: {{ comment.user.username }}</small>

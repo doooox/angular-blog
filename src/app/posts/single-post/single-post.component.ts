@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CommentService } from '../comment.service';
 import { AuthService } from '../../auth/auth.service';
+import { SocketService } from '../../socket.service';
 
 @Component({
   selector: 'app-single-post',
@@ -23,7 +24,8 @@ export class SinglePostComponent implements OnInit, OnDestroy {
     private postService: PostService,
     private commentService: CommentService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private socketService: SocketService
   ) {}
 
   ngOnInit(): void {
@@ -34,18 +36,21 @@ export class SinglePostComponent implements OnInit, OnDestroy {
           .getSinglePost(id)
           .subscribe((response) => {
             this.post = response;
+            this.comments = response.comments;
           });
 
         this.commentSub = this.commentService
           .getUpdatedComments()
           .subscribe(() => {
-            this.commentService.getPostComments(id).subscribe((comments) => {
-              this.comments = comments;
-            });
             this.postService.getSinglePost(id).subscribe((response) => {
-              this.post = response;
+              this.comments = response.comments;
             });
           });
+        this.socketService.getSocket().on('comment-added', () => {
+          this.postService.getSinglePost(id).subscribe((response) => {
+            this.comments = response.comments;
+          });
+        });
       }
     });
     this.userIsAuthenticated = this.authService.getAuthStatus();
