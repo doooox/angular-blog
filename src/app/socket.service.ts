@@ -7,8 +7,8 @@ import { Comment } from './posts/post.models';
 export class SocketService {
   private socket = io('http://localhost:5001');
 
-  sendComment(comment: Comment) {
-    this.socket.emit('comment-added', comment);
+  emitEvent(event: string, data?: any) {
+    this.socket.emit(event, data);
   }
 
   getSocket() {

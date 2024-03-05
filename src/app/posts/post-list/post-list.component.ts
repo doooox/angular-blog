@@ -5,6 +5,7 @@ import { PostService } from '../post.service';
 import { PageEvent } from '@angular/material/paginator';
 import { AuthService } from '../../auth/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { SocketService } from '../../socket.service';
 
 @Component({
   selector: 'app-post-list',
@@ -28,6 +29,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   constructor(
     private postService: PostService,
+    private socketService: SocketService,
     private authService: AuthService,
     private route: ActivatedRoute
   ) {}
@@ -59,12 +61,22 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.postService.getAllPosts(this.postsPerPage, this.currentPage);
       }
     });
+    this.socketService.getSocket().on('post-liked', () => {
+      this.postService.getAllPosts(this.postsPerPage, this.currentPage);
+    });
+    this.socketService.getSocket().on('post-added', () => {
+      this.postService.getAllPosts(this.postsPerPage, this.currentPage);
+    });
+    this.socketService.getSocket().on('post-deleted', () => {
+      this.postService.getAllPosts(this.postsPerPage, this.currentPage);
+    });
   }
   onLikePost(postId: string) {
-    this.postService.likePost(postId).subscribe((response) => {
+    this.postService.likePost(postId).subscribe(() => {
       const postIndex = this.posts.findIndex((post) => post._id === postId);
       this.postService.getSinglePost(postId).subscribe((updatedPost) => {
         this.posts[postIndex].likes = updatedPost.likes;
+        this.socketService.emitEvent('post-liked');
       });
     });
   }
@@ -104,8 +116,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   onPostDelete(id: string) {
-    this.postService.onDeletePost(id).subscribe((response) => {
+    this.postService.onDeletePost(id).subscribe(() => {
       this.postService.getAllPosts(this.postsPerPage, this.currentPage);
+      this.socketService.emitEvent('post-deleted');
     });
   }
 

@@ -16,7 +16,7 @@ export class CommentService {
       .post<Comment>(`${baseURL}comment/${postId}/add`, comment)
       .subscribe((response) => {
         this.updatedComments.next();
-        this.socketService.sendComment(response);
+        this.socketService.emitEvent('comment-added', response);
       });
   }
 

@@ -62,11 +62,8 @@ export class SinglePostComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.postSub) {
-      this.postSub.unsubscribe();
-    }
-    if (this.commentSub) {
-      this.commentSub.unsubscribe();
-    }
+    this.postSub.unsubscribe();
+    this.commentSub.unsubscribe();
+    this.authStatusSubs.unsubscribe;
   }
 }

@@ -4,13 +4,18 @@ import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { baseURL } from '../utils/static';
 import { Router } from '@angular/router';
+import { SocketService } from '../socket.service';
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
   posts: Post[] = [];
   updatedPosts = new Subject<PostResponse>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private socketService: SocketService
+  ) {}
 
   getAllPosts(postPerPage: number, currentPage: number) {
     const queryParams = `?pageSize=${postPerPage}&page=${currentPage}`;
@@ -71,6 +76,7 @@ export class PostService {
     postData.append('categories', JSON.stringify(categories));
     this.http.post(`${baseURL}posts/add`, postData).subscribe((response) => {
       this.router.navigate(['']);
+      this.socketService.emitEvent('post-added', response);
     });
   }
 
@@ -100,11 +106,9 @@ export class PostService {
       };
     }
 
-    this.http
-      .put(`${baseURL}posts/update/${id}`, postData)
-      .subscribe((response) => {
-        this.router.navigate(['']);
-      });
+    this.http.put(`${baseURL}posts/update/${id}`, postData).subscribe(() => {
+      this.router.navigate(['']);
+    });
   }
 
   onDeletePost(id: string) {
